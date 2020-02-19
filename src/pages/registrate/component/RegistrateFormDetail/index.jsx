@@ -18,6 +18,7 @@ const RegistrateFormDetail = memo((props) => {
         changePage,
         changeRegFormInput,
         changeRegFormCheckout,
+        submit,
     } = props;
 
 
@@ -25,7 +26,7 @@ const RegistrateFormDetail = memo((props) => {
         <RegistrateFormWrapper>
 
             {
-                regDetailContents.map((item, index) => {
+                regDetailContents.map((item) => {
                     switch (item.get('choiceType')) {
                         case 1:
                             return <InputCheckoutbox
@@ -60,7 +61,7 @@ const RegistrateFormDetail = memo((props) => {
             }
             <SubmitWrapper>
                 <Submit onClick={() => changePage(1)}>上一页</Submit>
-                <Submit onClick={() => changePage(1)}>提交</Submit>
+                <Submit onClick={() => submit()}>提交</Submit>
             </SubmitWrapper>
         </RegistrateFormWrapper>
     )

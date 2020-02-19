@@ -18,7 +18,7 @@ import {
 } from "./index.js";
 import backgroundUrl from "../../static/imgs/background.png";
 
-const toTop = () => {
+const backToTop = () => {
 	document.documentElement.scrollTop = 0;
 }
 
@@ -33,7 +33,7 @@ function Registrate() {
 	const dispatch = useDispatch();
 
 	const changePage = useCallback((toPageId) => {
-		toTop();
+		backToTop();
 		dispatch(actionCreators.changePageTo(toPageId));
 	}, [dispatch])
 
@@ -43,7 +43,12 @@ function Registrate() {
 
 	const changeRegFormCheckout = useCallback((pageId, qId, newValue, choiceType) => {
 		dispatch(actionCreators.changeRegFormCheckoutAction(pageId, qId, newValue, choiceType));
-	}, []);
+	}, [dispatch]);
+
+	// TODO: 应放在registrate
+	const submit = () => {
+		actionCreators.submit(reg, dispatch);
+	};
 
 	return (
 		<RegistrateWrapper>
@@ -51,7 +56,7 @@ function Registrate() {
 			{
 				getRegistrateFrom(
 					pageId, regContents, regDetailContents,
-					changePage, changeRegFormInput, changeRegFormCheckout
+					changePage, changeRegFormInput, changeRegFormCheckout, submit
 				)
 			}
 
@@ -67,7 +72,7 @@ function Registrate() {
 
 const getRegistrateFrom = (
 	pageId, regContents, regDetailContents,
-	changePage, changeRegFormInput, changeRegFormCheckout
+	changePage, changeRegFormInput, changeRegFormCheckout, submit
 ) => {
 
 	switch (pageId) {
@@ -89,6 +94,7 @@ const getRegistrateFrom = (
 						regDetailContents={regDetailContents}
 						changeRegFormInput={changeRegFormInput}
 						changeRegFormCheckout={changeRegFormCheckout}
+						submit={submit}
 					/>
 				</RegistrateFormWrapper>
 			)

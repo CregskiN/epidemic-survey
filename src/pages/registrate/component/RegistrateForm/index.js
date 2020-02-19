@@ -25,7 +25,7 @@ export const Submit = styled.div`
     background-color: #2671fe;
     width: 50vw;
     height: 10vw;
-    border-radius: 3%;
+    border-radius: 5px;
     display: block;
     text-align: center;
     line-height: 10vw;

@@ -18,5 +18,8 @@ export const Submit = styled.div`
     color: #fff;
     text-decoration: none;
    
-    
+    .link {
+        text-decoration: none;
+        color: #fff;
+    }
 `;

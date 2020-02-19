@@ -5,6 +5,14 @@ export const InputCheckoutboxWrapper = styled.div`
     margin: 15px 0;
     width: 100%;
 
+    after: {
+        content: '';
+        display: block;
+        width: 80%;
+        height: 1px;
+        background-color: #000;
+    }
+
     .header-text {
         margin: 0 0 10px 0;
         font-size: 17px;
@@ -15,12 +23,22 @@ export const InputCheckoutboxWrapper = styled.div`
     }
 
     .ant-radio-group {
-        margin: 0 0 0 0 ;
+        margin: 0;
+
+        .ant-radio-wrapper{
+            font-size: 15px;
+            line-height: 15px;
+
+            ::after {
+                content: ' ';
+                display: block;
+                margin: 6px 0;
+                background-color: #fff;
+            }
+        }
     }
     
-    .ant-radio-wrapper{
-        margin: 0 9px 0 9px;
-    }
+    
 
     .ant-checkbox-group-item {
         display: block;

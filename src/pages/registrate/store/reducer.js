@@ -18,11 +18,10 @@ const defaultState = fromJS({
             isRequired: true,
             maxLength: 100,
             choiceType: 1
-
         }, {
             qId: 1,
             pageId: 1,
-            headerText: '上报人联系方式',
+            headerText: '上报人手机/固话号码',
             placeholder: '',
             value: '',
             isRequired: true,
@@ -38,36 +37,6 @@ const defaultState = fromJS({
             isRequired: true,
             maxLength: 18,
             choiceType: 1
-
-        }, {
-            qId: 3,
-            pageId: 1,
-            headerText: '代理人姓名',
-            placeholder: '(本人上报无需填写)',
-            value: '',
-            isRequired: false,
-            maxLength: 100,
-            choiceType: 1
-
-        }, {
-            qId: 4,
-            pageId: 1,
-            headerText: '代理人手机号',
-            placeholder: '(本人上报无需填写)',
-            value: '',
-            isRequired: false,
-            maxLength: 11,
-            choiceType: 1
-
-        }, {
-            qId: 5,
-            pageId: 1,
-            headerText: '代理人身份证号',
-            placeholder: '(本人上报无需填写)',
-            value: '',
-            isRequired: false,
-            maxLength: 18,
-            choiceType: 1
         }
     ],
 
@@ -75,7 +44,7 @@ const defaultState = fromJS({
         {
             qId: 0,
             pageId: 2,
-            headerText: '上报人是否存在以下症状？(没有可不选)',
+            headerText: '上报人是否存在以下症状？(没有请不选)',
             options: [
                 { label: '干咳', value: 0 },
                 { label: '乏力', value: 1 },
@@ -90,7 +59,7 @@ const defaultState = fromJS({
                 { label: '其他症状', value: 10 }
             ],
             value: [],
-            isRequired: true,
+            isRequired: false,
             choiceType: 3
 
         },
@@ -99,15 +68,16 @@ const defaultState = fromJS({
             pageId: 2,
             headerText: '上报人家中是否有发热人员？',
             options: [{ content: '是' }, { content: '否' }],
-            value: 0,
+            value: -1,
             isRequired: true,
             choiceType: 2
         },
         {
             qId: 2,
             pageId: 2,
-            headerText: '上报人2019年12月1日后是否去过武汉？',
-            placeholder: '没有则无需填写',
+            headerText: '上报人2019年12月1日后是否去过武汉或湖北？具体去了哪里？',
+            placeholder: '没有请填否',
+            value: '',
             isRequired: true,
             choiceType: 1
         },
@@ -115,73 +85,79 @@ const defaultState = fromJS({
             qId: 3,
             pageId: 2,
             headerText: '上报人2019年12月1日后是否接触过疑似/确诊病例人员？',
-            placeholder: '没有则无需填写',
+            options: [{ content: '是' }, { content: '否' }],
+            value: -1,
             isRequired: true,
-            choiceType: 1
+            choiceType: 2
         },
         {
             qId: 4,
             pageId: 2,
-            headerText: '2019年12月1日后上报人家人是否去过湖北？',
-            placeholder: '没有则无需填写',
+            headerText: '上报人及家人两周以来是否去过沧州？去了哪里？',
+            placeholder: '',
+            value: '',
             isRequired: true,
             choiceType: 1
         },
         {
             qId: 5,
             pageId: 2,
-            headerText: '上报人及家人两周以来是否去过沧州？去了哪里？',
-            placeholder: '没有则无需填写',
+            headerText: '上报人及家人是否在隔离点隔离？具体在哪里隔离？',
+            placeholder: '没有请填否',
+            value: '',
             isRequired: true,
             choiceType: 1
         },
         {
             qId: 6,
             pageId: 2,
-            headerText: '上报人及家人是否在隔离点隔离？',
-            placeholder: '没有则无需填写',
+            headerText: '上报人居民常住地？',
+            placeholder: '',
+            value: '',
             isRequired: true,
             choiceType: 1
         },
         {
             qId: 7,
             pageId: 2,
-            headerText: '上报人居民常住地？',
-            placeholder: '没有则无需填写',
-            isRequired: true,
+            headerText: '上报人工作单位？',
+            placeholder: '',
+            value: '',
+            isRequired: false,
             choiceType: 1
         },
         {
             qId: 8,
             pageId: 2,
-            headerText: '上报人工作单位？',
-            placeholder: '没有则无需填写',
+            headerText: '上报人户籍所在地？',
+            placeholder: '',
+            value: '',
             isRequired: true,
             choiceType: 1
         },
         {
             qId: 9,
             pageId: 2,
-            headerText: '上报人户籍所在地？',
-            placeholder: '没有则无需填写',
+            headerText: '上报人所在社区？',
+            placeholder: '',
+            options: [{ content: '①号社区' }, { content: '②号社区' }, { content: '③号社区' }, { content: '④号社区' }],
+            value: -1,
             isRequired: true,
-            choiceType: 1
-        },
-        {
-            qId: 10,
-            pageId: 2,
-            headerText: '上报人当前所在位置？',
-            placeholder: '没有则无需填写',
-            isRequired: true,
-            choiceType: 1
-        },
+            choiceType: 2
+        }
 
     ],
 
-    pageId: 1,
+    pageId: 1, // registrate页面页码
 
+    isSubmitFinished: 1, // 提交状态 1.未提交 2.正在提交  3.提交完成
+
+    isQualified: null, // 是否合格/可以提交
+
+    birthday: '', // 生日
+    
+    gender: '', // 性别
 });
-
 
 
 
@@ -230,7 +206,13 @@ export default (state = defaultState, action) => {
             let newState;
             switch (choiceType) {
                 case 2:
-                    newState = state.setIn(['regDetailContents', `${qId}`, 'value'], newValue);
+                    if (pageId === 1) {
+                        newState = state.setIn(['regContents', `${qId}`, 'value'], newValue);
+                    }
+                    if (pageId === 2) {
+                        newState = state.setIn(['regDetailContents', `${qId}`, 'value'], newValue);
+                    }
+
                 case 3:
                     newState = state.setIn(['regDetailContents', `${qId}`, 'value'], newValue);
             }

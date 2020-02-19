@@ -8,7 +8,7 @@ function isThisType(val) {
     return false;
 }
 
-const illinessType = {
+export const illinessType = {
     0: '干咳',
     1: '乏力',
     2: '咳痰',
@@ -20,6 +20,21 @@ const illinessType = {
     8: '呕吐',
     9: '腹泻',
     10: '其他症状',
-    isThisType,
+}
+
+export const yOrNChoiceType = {
+    0: '是',
+    1: '否',
+}
+
+
+/**
+ * 1XXX 社区代码
+ */
+export const communitiesType = {
+    0: '1号社区',
+    1: '2号社区',
+    2: '3号社区',
+    3: '4号社区',
 }
 

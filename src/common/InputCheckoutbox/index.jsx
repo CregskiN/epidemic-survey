@@ -14,13 +14,19 @@ const InputCheckoutbox = memo((props) => {
 		changeRegFormCheckout
 	} = props;
 
-	const [headerText, isRequired, pageId, qId] = [item.get('headerText'), item.get('isRequired'), item.get('pageId'), item.get('qId')]
+	const [
+		headerText,
+		isRequired,
+		pageId,
+		qId,
+	] = [item.get('headerText'), item.get('isRequired'), item.get('pageId'), item.get('qId')]
 
 	if (choiceType === 1) {
 		const placeholder = item.get('placeholder');
 		const maxLength = item.get('maxLength');
+		const value = item.get('value');
 		return (
-			<InputBox headerText={headerText} isRequired={isRequired} placeholder={placeholder} maxLength={maxLength} pageId={pageId} qId={qId} changeRegFormInput={changeRegFormInput} />
+			<InputBox headerText={headerText} isRequired={isRequired} placeholder={placeholder} value={value} maxLength={maxLength} pageId={pageId} qId={qId} changeRegFormInput={changeRegFormInput} />
 		)
 
 	} else if (choiceType === 2) { /* 单选 */

@@ -14,14 +14,14 @@ const InputBox = memo((props) => {
 		pageId,
 		qId,
 		changeRegFormInput,
-
+		value
 	} = props;
 
 	return (
 		<InputBoxWrapper>
 			<div className="header-text">{headerText} {isRequired ? <span>*</span> : ""}</div>
 
-			<Input maxLength={maxLength} size='large' placeholder={placeholder} onChange={e => changeRegFormInput(pageId, qId, e.target.value)} />
+			<Input maxLength={maxLength} size='large' placeholder={placeholder} value={value} onChange={e => changeRegFormInput(pageId, qId, e.target.value)} />
 		</InputBoxWrapper>
 	);
 });
