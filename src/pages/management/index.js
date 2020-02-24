@@ -4,7 +4,6 @@ export const ManagementWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* overflow-y: scroll; */
     width: 100vw;
     height: 94vh;
 
@@ -13,13 +12,24 @@ export const ManagementWrapper = styled.div`
         margin: 10px auto;
         margin-top: 40px;
         color: #67cfff;
+
     }
 `;
 
 export const DisplayBoardWrapper = styled.div`
-    width: 95%;
+    width: 95vw;
     margin-top: 36vw; /* 表格与顶部的距离 */
     z-index: 10;
+    background-color: #fff;
+    border-radius: 5px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+export const UserListShowWrapper = styled.div`
+    width: 90vw;
 `;
 
 
@@ -29,3 +39,4 @@ export const BackgroundWrapper = styled.div`
     width: 100%;
     z-index: -10;
 `;
+

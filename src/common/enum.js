@@ -1,7 +1,7 @@
 
 function isThisType(val) {
     for (let key in this) { // this指向当前对象
-        if (key == val || this[key] == val) {
+        if (parseInt(key) == val || this[key] === val) {
             return true;
         }
     }

@@ -4,10 +4,14 @@ import { createSelector } from 'reselect';
 
 import Background from '../../common/Background/index.jsx';
 import LoginBoard from '../../common/LoginBoard/index.jsx';
+import DisplayBoard from './component/DisplayBoard/index.jsx';
+import UserListShow from './component/UserListShow/index.jsx';
+
 import {
     ManagementWrapper,
     DisplayBoardWrapper,
     BackgroundWrapper,
+    UserListShowWrapper
 } from './index.js';
 import { actionCreators } from './store/index.js';
 import { actionCreators as regActionCreators } from '../registrate/store/index.js';
@@ -17,7 +21,7 @@ const Management = () => {
     const managementSelector = createSelector(state => state, state => state.management);
 
     const management = useSelector(managementSelector, shallowEqual);
-    const [isLoginBoardHidden, managerInfo] = [management.get('isLoginBoardHidden'), management.get('managerInfo')];
+    const [isLoginBoardHidden, managerInfo, usersAndRegs] = [management.get('isLoginBoardHidden'), management.get('managerInfo'), management.get('usersAndRegs')];
     const dispatch = useDispatch();
 
     const changeInput = useCallback((pageId, id, newValue) => {
@@ -28,19 +32,27 @@ const Management = () => {
         actionCreators.submit(managerInfo, dispatch);
     };
 
+    //TODO: 头部页码跳转需要整合
     useEffect(() => {
         dispatch(regActionCreators.changePageTo(3));
     }, [dispatch])
 
     return (
         <ManagementWrapper>
+
             <LoginBoard hidden={isLoginBoardHidden} managerInfo={managerInfo} submit={submit} changeInput={changeInput} />
 
-            <DisplayBoardWrapper>
-                展示面板
-            </DisplayBoardWrapper>
+            {/* <UserHeader /> */}
 
-            <footer className='footer'>—— 全面落实党中央决策部署&emsp;坚决打赢疫情防控战 ——</footer>
+            <DisplayBoardWrapper>
+
+                <DisplayBoard usersAndRegs={usersAndRegs}/>
+
+                <UserListShowWrapper>
+                    <UserListShow usersAndRegs={usersAndRegs} />
+                </UserListShowWrapper>
+
+            </DisplayBoardWrapper>
 
             <BackgroundWrapper>
                 <Background bgUrl={backgroundUrl} />

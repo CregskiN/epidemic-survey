@@ -46,10 +46,12 @@ export const getAge = (birthday, currentDay) => {
  */
 export const dealWithAxiosErrors = (res) => {
     const { error_code, msg } = res.data;
-
     if (errorCodeType.isThisType(error_code)) {
         alert(`${msg ? msg : errorCodeType[error_code]}`)
         return 'bad request';
+    }
+    if (typeof msg !== 'string') {
+        return 'success';
     }
     alert(`${msg}`);
     return 'success'

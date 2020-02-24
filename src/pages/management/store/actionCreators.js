@@ -19,11 +19,27 @@ export const changeInputAction = (pageId = -1, id, newValue) => {
     }
 }
 
+/**
+ * 隐藏登录框
+ */
 export const hideLoginBoardAction = () => {
     return {
         type: actionTypes.hide_loginboard_action,
         payload: {
             isLoginBoardHidden: true
+        }
+    }
+}
+
+/**
+ * 存储所有查询的数据
+ * @param {*} usersAndRegs 
+ */
+export const getAllUsersAndRegsAction = (usersAndRegs) => {
+    return {
+        type: actionTypes.get_all_users_and_regs_action,
+        payload: {
+            usersAndRegs
         }
     }
 }
@@ -42,9 +58,6 @@ export const submit = (managerInfo, dispatch) => {
         return;
     }
 
-    console.log(m);
-
-
     axios.get(`${config.api_base_url}:${config.port}/epidemic/v1/registrate/login`, {
         params: {
             account: m[0].value,
@@ -53,19 +66,16 @@ export const submit = (managerInfo, dispatch) => {
         }
     }).then(res => {
         const dealRes = dealWithAxiosErrors(res);
-        console.log(dealRes);
-        
+
         if (dealRes === 'bad request') {
             return;
         } else if (dealRes === 'success') {
             dispatch(hideLoginBoardAction());
+            getAllUsersAndRegs(managerInfo, dispatch); //TODO: 此处耦合，待优化
         }
-
     }).catch(err => {
         console.log(err);
     })
-
-
 }
 
 /**
@@ -86,3 +96,34 @@ const _verify = (managerInfoJS) => {
 
     return true;
 }
+
+
+/**
+ * 获取全部user和regs
+ */
+export const getAllUsersAndRegs = (managerInfo, dispatch) => {
+    const m = managerInfo.toJS();   
+
+    axios.get(`${config.api_base_url}:${config.port}/epidemic/v1/registrate`, {
+        params: {
+            account: m[0].value,
+            password: m[1].value,
+            appkey: config.appkey
+        }
+    }).then(res => {
+        const dealRes = dealWithAxiosErrors(res);
+        
+        if (dealRes === 'bad request') {
+            return;
+        } else if (dealRes === 'success') {
+            const usersAndRegs = res.data.msg;
+            
+            dispatch(getAllUsersAndRegsAction(usersAndRegs))
+        }
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+
+

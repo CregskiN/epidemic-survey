@@ -3,6 +3,8 @@ import { actionTypes } from './index.js';
 
 const defaultState = fromJS({
 
+    usersAndRegs: [], // [{用户信息，reg信息},{},{}]
+
     managerInfo: [
         {
             headerText: '账号',
@@ -19,7 +21,7 @@ const defaultState = fromJS({
 
     isSubmit: 1010, // 1010未提交&登陆失败 1020提交中 1030登陆成功 
 
-    isLoginBoardHidden: true, // 控制登录框隐藏
+    isLoginBoardHidden: false, // 控制登录框隐藏
 
 
 
@@ -39,6 +41,12 @@ export default (state = defaultState, action) => {
         case actionTypes.hide_loginboard_action: {
             const { isLoginBoardHidden } = action.payload;
             const newState = state.set('isLoginBoardHidden', isLoginBoardHidden);
+            return newState;
+        }
+
+        case actionTypes.get_all_users_and_regs_action: {
+            const { usersAndRegs } = action.payload;
+            const newState = state.set('usersAndRegs', fromJS(usersAndRegs));
             return newState;
         }
 
