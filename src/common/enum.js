@@ -1,7 +1,7 @@
 
 function isThisType(val) {
     for (let key in this) { // this指向当前对象
-        if (this[key] === val) {
+        if (key == val || this[key] == val) {
             return true;
         }
     }
@@ -32,9 +32,18 @@ export const yOrNChoiceType = {
  * 1XXX 社区代码
  */
 export const communitiesType = {
-    0: '1号社区',
-    1: '2号社区',
-    2: '3号社区',
-    3: '4号社区',
+    0: '幸福街社区',
+    1: '新城社区',
+    2: '朝阳街社区',
+    3: '盐厂社区',
 }
 
+export const errorCodeType = {
+    10000: '服务器异常',
+    10100: '参数类型错误',
+    10200: 'appkey认证错误',
+    10300: '登陆失败',
+    10400: '数据库添加失败',
+    10410: '数据库查询无结果',
+    isThisType: isThisType
+}

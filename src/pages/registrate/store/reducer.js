@@ -94,7 +94,7 @@ const defaultState = fromJS({
             qId: 4,
             pageId: 2,
             headerText: '上报人及家人两周以来是否去过沧州？去了哪里？',
-            placeholder: '',
+            placeholder: '没有请填否',
             value: '',
             isRequired: true,
             choiceType: 1
@@ -140,7 +140,7 @@ const defaultState = fromJS({
             pageId: 2,
             headerText: '上报人所在社区？',
             placeholder: '',
-            options: [{ content: '①号社区' }, { content: '②号社区' }, { content: '③号社区' }, { content: '④号社区' }],
+            options: [{ content: '幸福街社区' }, { content: '新城社区' }, { content: '朝阳街社区' }, { content: '盐厂社区' }],
             value: -1,
             isRequired: true,
             choiceType: 2
@@ -150,13 +150,16 @@ const defaultState = fromJS({
 
     pageId: 1, // registrate页面页码
 
-    isSubmitFinished: 1, // 提交状态 1.未提交 2.正在提交  3.提交完成
+    submitState: 1010, // 提交状态 1010.未提交 1020.正在提交  1030.提交失败 1040.提交完成
 
     isQualified: null, // 是否合格/可以提交
 
-    birthday: '', // 生日
-    
-    gender: '', // 性别
+    communityId: -1,
+    /**
+     * birthday 无需状态共享，在提交时自动计算
+     * age 同上
+     * 
+     */
 });
 
 
@@ -217,6 +220,16 @@ export default (state = defaultState, action) => {
                     newState = state.setIn(['regDetailContents', `${qId}`, 'value'], newValue);
             }
             return newState;
+        }
+
+        case actionTypes.change_is_qualified_action: {
+            const { isQualified } = action.payload;
+            const newState = state.set('isQualified', isQualified);
+            return newState;
+        }
+
+        case actionTypes.change_community_id: {
+            
         }
 
         default:

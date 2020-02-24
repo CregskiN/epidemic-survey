@@ -1,9 +1,9 @@
-
+import { errorCodeType } from './enum';
 /**
  * 
  * @param {*} getDay 生日代码-示例 20000214
  */
-export const getBirthday = (birthCode) => {
+export const getDay = (birthCode) => {
     return {
         $y: parseInt(birthCode.slice(0, 4)),
         $M: parseInt(birthCode.slice(4, 6)),
@@ -20,9 +20,9 @@ export const getBirthday = (birthCode) => {
 export const getAge = (birthday, currentDay) => {
     let age;
 
-    const monthSub = current.$M - birthday.$M;
-    const yearSub = current.$y - birthday.$y;
-    const daySub = current.$D - birthday.$D;
+    const monthSub = currentDay.$M - birthday.$M;
+    const yearSub = currentDay.$y - birthday.$y;
+    const daySub = currentDay.$D - birthday.$D;
 
     if (monthSub > 0) {
         age = yearSub + 1;
@@ -38,4 +38,18 @@ export const getAge = (birthday, currentDay) => {
     }
     age = 0;
     return age;
+}
+
+/**
+ * 处理axios错误
+ * @param {*} res 
+ */
+export const dealWithAxiosErrors = (res) => {
+    const { error_code, msg } = res.data;
+
+    if (errorCodeType.isThisType(error_code)) {
+        alert(`${msg ? msg : errorCodeType[error_code]}`)
+        return 'bad request';
+    }
+    return 'success'
 }
