@@ -51,5 +51,6 @@ export const dealWithAxiosErrors = (res) => {
         alert(`${msg ? msg : errorCodeType[error_code]}`)
         return 'bad request';
     }
+    alert(`${msg}`);
     return 'success'
 }

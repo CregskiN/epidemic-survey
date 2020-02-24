@@ -236,12 +236,12 @@ export const submit = (reg, dispatch) => {
         .then((res) => {
             const dealRes = dealWithAxiosErrors(res);
             if (dealRes === 'bad request') {
-                
-            } else if (dealRes === 'ok') {
-
+                window.location.reload();
+                return;
+            } else if (dealRes === 'success') {
+                window.location.reload();
+                return;
             }
-
-
         }).catch(err => {
             console.log(err);
         })

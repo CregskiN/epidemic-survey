@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const InputBoxWrapper = styled.div`
-
+opacity: 1;
     margin: 15px 0;
     width: 100%;
 
