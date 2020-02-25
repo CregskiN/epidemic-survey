@@ -46,9 +46,9 @@ export const UserListWrapper = styled.div`
 
 export const ListItemWrapper = styled.div`
     width: 100%;
-    height: 25px;
+    height: 30px;
     margin: 5px 0 0 0;
-    font-size: 100%;
+    font-size: 90%;
     box-shadow: #e2e1e4 0 0 15px;
     border-top: 1px solid #e2e1e4;
     display: flex;

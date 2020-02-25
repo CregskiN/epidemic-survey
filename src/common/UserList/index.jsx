@@ -7,24 +7,26 @@ import {
 
 const ListItem = memo((props) => {
     const {
-        userInfo
+        userInfo,
+        onDelete
     } = props;
 
     const [
         user_id,
         user_name,
+        user_community,
         user_gender,
         user_age,
-        user_account
-    ] = [userInfo.get('user_id'), userInfo.get('user_name'), userInfo.get('user_gender'), userInfo.get('user_age'), userInfo.get('user_account')]
+        user_account,
+    ] = [userInfo.get('user_id'), userInfo.get('user_name'), userInfo.get('user_community'), userInfo.get('user_gender'), userInfo.get('user_age'), userInfo.get('user_account')]
 
     return (
-        <ListItemWrapper>
+        <ListItemWrapper onClick={() => onDelete(user_name, user_id, user_community)} >
             <div className='item-name'>{user_name}</div>
             <div className='item-gender'>{user_gender}</div>
             <div className='item-age'>{user_age}</div>
             <div className='item-phoneNumber'>{user_account}</div>
-        </ListItemWrapper>
+        </ListItemWrapper >
     )
 })
 
@@ -32,7 +34,8 @@ const ListItem = memo((props) => {
 const UserList = memo((props) => {
 
     const {
-        usersAndRegs
+        usersAndRegs,
+        onDelete
     } = props;
 
 
@@ -53,7 +56,7 @@ const UserList = memo((props) => {
                         : usersAndRegs.map((value, index) => {
                             const userInfo = value.get('userInfo');
                             return (
-                                <ListItem key={userInfo.get('user_id')} userInfo={userInfo} />
+                                <ListItem key={userInfo.get('user_id')} userInfo={userInfo} onDelete={onDelete} />
                             )
                         })
                 }

@@ -9,12 +9,13 @@ import {
 
 const UserListShow = memo((props) => {
     const {
-        usersAndRegs
+        usersAndRegs,
+        onDelete
     } = props;
 
     return (
         <UserListShowWrapper>
-            <UserList usersAndRegs={usersAndRegs}/>
+            <UserList usersAndRegs={usersAndRegs} onDelete={onDelete}/>
         </UserListShowWrapper>
     )
 })

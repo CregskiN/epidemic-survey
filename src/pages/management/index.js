@@ -28,10 +28,13 @@ export const DisplayBoardWrapper = styled.div`
     align-items: center;
 `;
 
-export const UserListShowWrapper = styled.div`
+export const ManagerHeaderWrapper = styled.div`
     width: 90vw;
 `;
 
+export const UserListShowWrapper = styled.div`
+    width: 90vw;
+`;
 
 export const BackgroundWrapper = styled.div`
     position: fixed;

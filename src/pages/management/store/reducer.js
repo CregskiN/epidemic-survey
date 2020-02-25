@@ -19,7 +19,7 @@ const defaultState = fromJS({
         }
     ],
 
-    isSubmit: 1010, // 1010未提交&登陆失败 1020提交中 1030登陆成功 
+    isOk: false, // 是否有数据展示
 
     isLoginBoardHidden: false, // 控制登录框隐藏
 
@@ -47,6 +47,19 @@ export default (state = defaultState, action) => {
         case actionTypes.get_all_users_and_regs_action: {
             const { usersAndRegs } = action.payload;
             const newState = state.set('usersAndRegs', fromJS(usersAndRegs));
+            return newState;
+        }
+
+        case actionTypes.storage_manager_info_action: {
+            const { managerInfo } = action.payload;
+            console.log(managerInfo)
+            const newState = state.set('managerInfo', fromJS(managerInfo));
+            return newState;
+        }
+
+        case actionTypes.change_is_ok_to_true_action: {
+            const { isOk } = action.payload;
+            const newState = state.set('isOk', isOk);
             return newState;
         }
 
